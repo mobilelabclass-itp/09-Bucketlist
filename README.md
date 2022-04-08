@@ -8,5 +8,4 @@
 
 - TODO: add delete button
 
-https://www.hackingwithswift.com/books/ios-swiftui/adding-user-locations-to-a-map
-
+https://www.hackingwithswift.com/books/ios-swiftui/bucket-list-introduction
