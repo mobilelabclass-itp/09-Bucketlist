@@ -9,9 +9,13 @@ import SwiftUI
 
 @main
 struct BucketlistApp: App {
+    
+    @StateObject private var viewModel = ViewModel()
+
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environmentObject( viewModel )
         }
     }
 }

@@ -9,7 +9,7 @@ import MapKit
 import SwiftUI
 
 struct ContentView: View {
-    @StateObject private var viewModel = ViewModel()
+    @EnvironmentObject private var viewModel: ViewModel
 
     var body: some View {
         // if viewModel.isUnlocked {

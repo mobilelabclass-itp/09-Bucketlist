@@ -9,9 +9,9 @@ import Foundation
 import LocalAuthentication
 import MapKit
 
-var span =  MKCoordinateSpan(latitudeDelta: 25, longitudeDelta: 25);
+var span =  MKCoordinateSpan(latitudeDelta: 0.001, longitudeDelta: 0.001);
 
-extension ContentView {
+//extension ContentView {
     @MainActor class ViewModel: ObservableObject {
         @Published var mapRegion = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 50, longitude: 0), span: span)
         @Published private(set) var locations: [Location]
@@ -83,4 +83,4 @@ extension ContentView {
             }
         }
     }
-}
+//}
