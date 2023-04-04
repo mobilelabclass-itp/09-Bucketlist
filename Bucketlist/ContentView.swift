@@ -13,55 +13,70 @@ struct ContentView: View {
 
     var body: some View {
         // if viewModel.isUnlocked {
-        ZStack {
-            Map(coordinateRegion: $viewModel.mapRegion, annotationItems: viewModel.locations) { location in
-                MapAnnotation(coordinate: location.coordinate) {
-                    VStack {
-                        Image(systemName: "star.circle")
-                            .resizable()
-                            .foregroundColor(.red)
-                            .frame(width: 44, height: 44)
-                            .background(.white)
-                            .clipShape(Circle())
-                        
-                        Text(location.name)
-                            .fixedSize()
-                    }
-                    .onTapGesture {
-                        viewModel.selectedPlace = location
+        NavigationView {
+            ZStack {
+                Map(coordinateRegion: $viewModel.mapRegion, annotationItems: viewModel.locations) { location in
+                    MapAnnotation(coordinate: location.coordinate) {
+                        VStack {
+                            Image(systemName: "star.circle")
+                                .resizable()
+                                .foregroundColor(.red)
+                                .frame(width: 44, height: 44)
+                                .background(.white)
+                                .clipShape(Circle())
+                            
+                            Text(location.name)
+                                .fixedSize()
+                        }
+                        .onTapGesture {
+                            viewModel.selectedPlace = location
+                        }
                     }
                 }
-            }
-            .ignoresSafeArea()
-            
-            Circle()
-                .fill(.blue)
-                .opacity(0.3)
-                .frame(width: 32, height: 32)
-            
-            VStack {
-                Spacer()
+                .ignoresSafeArea()
                 
-                HStack {
+                Circle()
+                    .fill(.blue)
+                    .opacity(0.3)
+                    .frame(width: 32, height: 32)
+                
+                VStack {
                     Spacer()
                     
-                    Button {
-                        viewModel.addLocation()
-                    } label: {
-                        Image(systemName: "plus")
-                            .padding()
-                            .background(.black.opacity(0.75))
-                            .foregroundColor(.white)
-                            .font(.title)
-                            .clipShape(Circle())
-                            .padding(.trailing)
+                    HStack {
+                        Spacer()
+                        
+                        NavigationLink(
+                            destination:
+                                List {
+                                    ForEach(viewModel.locations) { location in
+                                        Text(location.name)
+                                    }
+                                }
+                        )
+                        {
+                            Text("List")
+                                .font(.title)
+                        }
+
+                        Button {
+                            viewModel.addLocation()
+                        } label: {
+                            Image(systemName: "plus")
+                                .padding()
+                                .background(.black.opacity(0.75))
+                                .foregroundColor(.white)
+                                .font(.title)
+                                .clipShape(Circle())
+                                .padding(.trailing)
+                        }
                     }
                 }
             }
-        }
-        .sheet(item: $viewModel.selectedPlace) { place in
-            EditView(location: place) { newLocation in
-                viewModel.update(location: newLocation)
+            .sheet(item: $viewModel.selectedPlace) { place in
+                EditView(location: place) { newLocation in
+                    viewModel.update(location: newLocation)
+                }
             }
         }
         //        } else {
