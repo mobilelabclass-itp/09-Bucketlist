@@ -9,9 +9,11 @@ import Foundation
 import LocalAuthentication
 import MapKit
 
+var span =  MKCoordinateSpan(latitudeDelta: 25, longitudeDelta: 25);
+
 extension ContentView {
     @MainActor class ViewModel: ObservableObject {
-        @Published var mapRegion = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 50, longitude: 0), span: MKCoordinateSpan(latitudeDelta: 25, longitudeDelta: 25))
+        @Published var mapRegion = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 50, longitude: 0), span: span)
         @Published private(set) var locations: [Location]
         @Published var selectedPlace: Location?
         @Published var isUnlocked = false
@@ -27,6 +29,10 @@ extension ContentView {
                 locations = try JSONDecoder().decode([Location].self, from: data)
             } catch {
                 locations = []
+            }
+            if let last = locations.last {
+                mapRegion = MKCoordinateRegion(center: last.coordinate,
+                                               span: span)
             }
         }
 
