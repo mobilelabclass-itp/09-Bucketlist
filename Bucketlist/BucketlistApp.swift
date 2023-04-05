@@ -10,7 +10,7 @@ import SwiftUI
 @main
 struct BucketlistApp: App {
     
-    @StateObject private var viewModel = ViewModel()
+    @StateObject private var viewModel = AppModel()
 
     var body: some Scene {
         WindowGroup {

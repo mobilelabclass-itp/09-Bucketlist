@@ -8,30 +8,26 @@
 import SwiftUI
 
 struct EditView: View {
-    @StateObject private var viewModel: ViewModel
-    @Environment(\.dismiss) var dismiss
+    
+    @StateObject private var locationModel: LocationModel
     var onSave: (Location) -> Void
+
+    @Environment(\.dismiss) var dismiss
 
     var body: some View {
         NavigationView {
             Form {
                 Section {
-                    TextField("Place name", text: $viewModel.name)
-                    TextField("Description", text: $viewModel.description)
+                    TextField("Place name", text: $locationModel.name)
+                    TextField("Description", text: $locationModel.description)
                 }
 
                 Section("Nearby…") {
-                    switch viewModel.loadingState {
+                    switch locationModel.loadingState {
                     case .loading:
                         Text("Loading…")
                     case .loaded:
-                        ForEach(viewModel.pages, id: \.pageid) { page in
-                            Text(page.title)
-                                .font(.headline)
-                            + Text(": ")
-                            + Text(page.description)
-                                .italic()
-                        }
+                        NearbyView(locationModel: locationModel)
                     case .failed:
                         Text("Please try again later.")
                     }
@@ -40,20 +36,33 @@ struct EditView: View {
             .navigationTitle("Place details")
             .toolbar {
                 Button("Save") {
-                    let newLocation = viewModel.createNewLocation()
+                    let newLocation = locationModel.createNewLocation()
                     onSave(newLocation)
                     dismiss()
                 }
             }
             .task {
-                await viewModel.fetchNearbyPlaces()
+                await locationModel.fetchNearbyPlaces()
             }
         }
     }
 
     init(location: Location, onSave: @escaping (Location) -> Void) {
         self.onSave = onSave
-        _viewModel = StateObject(wrappedValue: ViewModel(location: location))
+        _locationModel = StateObject(wrappedValue: LocationModel(location: location))
+    }
+}
+
+struct NearbyView: View {
+    var locationModel: LocationModel
+    var body: some View {
+        ForEach(locationModel.pages, id: \.pageid) { page in
+            Text(page.title)
+                .font(.headline)
+            + Text(": ")
+            + Text(page.description)
+                .italic()
+        }
     }
 }
 

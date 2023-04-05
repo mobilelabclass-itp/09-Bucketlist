@@ -9,13 +9,19 @@ import MapKit
 import SwiftUI
 
 struct ContentView: View {
-    @EnvironmentObject private var viewModel: ViewModel
+    
+    @EnvironmentObject private var appModel: AppModel
+    
+//    @State private var selection: Location?
 
     var body: some View {
+        
+        let _ = Self._printChanges()
+        
         // if viewModel.isUnlocked {
         NavigationView {
             ZStack {
-                Map(coordinateRegion: $viewModel.mapRegion, annotationItems: viewModel.locations) { location in
+                Map(coordinateRegion: $appModel.mapRegion, annotationItems: appModel.locations) { location in
                     MapAnnotation(coordinate: location.coordinate) {
                         VStack {
                             Image(systemName: "star.circle")
@@ -29,7 +35,7 @@ struct ContentView: View {
                                 .fixedSize()
                         }
                         .onTapGesture {
-                            viewModel.selectedPlace = location
+                            appModel.selectedPlace = location
                         }
                     }
                 }
@@ -46,21 +52,15 @@ struct ContentView: View {
                     HStack {
                         Spacer()
                         
-                        NavigationLink(
-                            destination:
-                                List {
-                                    ForEach(viewModel.locations) { location in
-                                        Text(location.name)
-                                    }
-                                }
-                        )
-                        {
+                        NavigationLink {
+                            LocationListView(selection: $appModel.selectedPlace )
+                        } label: {
                             Text("List")
                                 .font(.title)
                         }
-
+                        
                         Button {
-                            viewModel.addLocation()
+                            appModel.addLocation()
                         } label: {
                             Image(systemName: "plus")
                                 .padding()
@@ -73,24 +73,24 @@ struct ContentView: View {
                     }
                 }
             }
-            .sheet(item: $viewModel.selectedPlace) { place in
+            .sheet(item: $appModel.selectedPlace) { place in
                 EditView(location: place) { newLocation in
-                    viewModel.update(location: newLocation)
+                    appModel.update(location: newLocation)
                 }
             }
         }
         //        } else {
         //            Button("Unlock Places") {
-        //                viewModel.authenticate()
+        //                appModel.authenticate()
         //            }
         //            .padding()
         //            .background(.blue)
         //            .foregroundColor(.white)
         //            .clipShape(Capsule())
-        //            .alert("Authentication error", isPresented: $viewModel.isShowingAuthenticationError) {
+        //            .alert("Authentication error", isPresented: $appModel.isShowingAuthenticationError) {
         //                Button("OK") { }
         //            } message: {
-        //                Text(viewModel.authenticationError)
+        //                Text(appModel.authenticationError)
         //            }
         //        }
     }
@@ -99,5 +99,6 @@ struct ContentView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
+            .environmentObject( AppModel() )
     }
 }
