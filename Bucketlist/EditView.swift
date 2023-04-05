@@ -57,11 +57,19 @@ struct NearbyView: View {
     var locationModel: LocationModel
     var body: some View {
         ForEach(locationModel.pages, id: \.pageid) { page in
+            Group {
             Text(page.title)
                 .font(.headline)
             + Text(": ")
             + Text(page.description)
                 .italic()
+                
+            }
+            .onTapGesture {
+                locationModel.name = page.title
+                locationModel.description = page.description
+            }
+
         }
     }
 }
