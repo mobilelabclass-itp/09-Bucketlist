@@ -12,13 +12,10 @@ struct ContentView: View {
     
     @EnvironmentObject private var appModel: AppModel
     
-//    @State private var selection: Location?
-
     var body: some View {
         
         let _ = Self._printChanges()
         
-        // if viewModel.isUnlocked {
         NavigationView {
             ZStack {
                 Map(coordinateRegion: $appModel.mapRegion, annotationItems: appModel.locations) { location in
