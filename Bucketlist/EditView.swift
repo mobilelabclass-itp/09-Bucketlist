@@ -11,9 +11,9 @@ struct EditView: View {
     
     @StateObject private var locationModel: LocationModel
     var onSave: (Location) -> Void
-
+    
     @Environment(\.dismiss) var dismiss
-
+    
     var body: some View {
         NavigationView {
             Form {
@@ -21,7 +21,7 @@ struct EditView: View {
                     TextField("Place name", text: $locationModel.name)
                     TextField("Description", text: $locationModel.description)
                 }
-
+                
                 Section("Nearby…") {
                     switch locationModel.loadingState {
                     case .loading:
@@ -46,7 +46,7 @@ struct EditView: View {
             }
         }
     }
-
+    
     init(location: Location, onSave: @escaping (Location) -> Void) {
         self.onSave = onSave
         _locationModel = StateObject(wrappedValue: LocationModel(location: location))
@@ -58,18 +58,18 @@ struct NearbyView: View {
     var body: some View {
         ForEach(locationModel.pages, id: \.pageid) { page in
             Group {
-            Text(page.title)
-                .font(.headline)
-            + Text(": ")
-            + Text(page.description)
-                .italic()
+                Text(page.title)
+                    .font(.headline)
+                + Text(": ")
+                + Text(page.description)
+                    .italic()
                 
             }
             .onTapGesture {
                 locationModel.name = page.title
                 locationModel.description = page.description
             }
-
+            
         }
     }
 }
