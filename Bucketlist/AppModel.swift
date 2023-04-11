@@ -70,6 +70,7 @@ class AppModel: ObservableObject {
     func removeLocation(at offsets: IndexSet) {
         print("removeLocation at", offsets)
         locations.remove(atOffsets: offsets)
+        save()
     }
     
     func authenticate() {
