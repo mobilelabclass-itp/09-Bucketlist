@@ -25,7 +25,7 @@ class AppModel: ObservableObject {
     @Published var authenticationError = "Unknown error"
     @Published var isShowingAuthenticationError = false
     
-    let savePath = FileManager.documentsDirectory.appendingPathComponent("SavedPlaces")
+    let savePath = FileManager.documentsDirectory.appendingPathComponent("SavedPlaces.json")
     
     init() {
         do {
@@ -39,6 +39,8 @@ class AppModel: ObservableObject {
             mapRegion = MKCoordinateRegion(center: last.coordinate,
                                            span: initFocus)
         }
+        
+        print("AppModel savePath", savePath)
     }
     
     func save() {
