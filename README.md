@@ -26,6 +26,6 @@ https://www.hackingwithswift.com/books/ios-swiftui/bucket-list-introduction
 
 ## Issues
 
-[] Warning: Publishing changes from within view updates is not allowed
+[] Warning: "Publishing changes from within view updates is not allowed"
 
 
