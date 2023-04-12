@@ -23,6 +23,7 @@ https://www.hackingwithswift.com/books/ios-swiftui/bucket-list-introduction
 ```
     let _ = Self._printChanges()
 ```
+- Show edit sheet after adding a location
 
 ## Issues
 

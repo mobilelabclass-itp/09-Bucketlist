@@ -57,7 +57,9 @@ struct ContentView: View {
                         }
                         
                         Button {
+                            // Add a location and bring up edit sheet
                             appModel.addLocation()
+                            appModel.selectedPlace = appModel.locations.last
                         } label: {
                             Image(systemName: "plus")
                                 .padding()
