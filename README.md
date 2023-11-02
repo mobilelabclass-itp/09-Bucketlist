@@ -4,6 +4,8 @@
 
 - Saves data to local Documents folder as SavedPlaces JSON file
 
+- Example of getting JSON from web api
+
 [] TODO: use current location
 
 
