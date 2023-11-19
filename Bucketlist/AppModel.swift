@@ -14,7 +14,7 @@ var initFocus =  MKCoordinateSpan(latitudeDelta: 0.001, longitudeDelta: 0.001)
 var initLoc = CLLocationCoordinate2D(latitude: 40.693, longitude: -73.987) // Brooklyn ITP
 
 //extension ContentView {
-//@MainActor
+@MainActor
 class AppModel: ObservableObject {
     
     @Published var mapRegion = MKCoordinateRegion(center: initLoc, span: initFocus)
