@@ -14,6 +14,7 @@ struct ContentView: View {
     
     var body: some View {
         
+        // Debug changes to view
         let _ = Self._printChanges()
         
         NavigationView {
@@ -53,7 +54,9 @@ struct ContentView: View {
                             LocationListView(selection: $appModel.selectedPlace )
                         } label: {
                             Text("List")
+                                .padding(10)
                                 .font(.title)
+                                .background()
                         }
                         
                         Button {

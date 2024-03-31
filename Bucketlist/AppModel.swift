@@ -45,7 +45,9 @@ class AppModel: ObservableObject {
     
     func save() {
         do {
-            let data = try JSONEncoder().encode(locations)
+            let encoder = JSONEncoder()
+            encoder.outputFormatting = .prettyPrinted
+            let data = try encoder.encode(locations)
             try data.write(to: savePath, options: [.atomic, .completeFileProtection])
         } catch {
             print("Unable to save data.")

@@ -35,10 +35,10 @@ struct LocationListView: View {
     }
 }
 
-//struct LocationListView_Previews: PreviewProvider {
-//    @State var selection:Location = Location.example
-//    static var previews: some View {
-//        LocationListView(selection: selection)
-//            .environmentObject( AppModel() )
-//    }
-//}
+struct LocationListView_Previews: PreviewProvider {
+    static var previews: some View {
+        @State var selection:Location? = Location.example
+        LocationListView(selection: $selection)
+            .environmentObject( AppModel() )
+    }
+}

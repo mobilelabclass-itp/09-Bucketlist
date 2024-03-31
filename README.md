@@ -6,7 +6,9 @@
 
 - Example of getting JSON from web api
 
-[] TODO: use current location
+- to show app data: in Windows | Devices... | download app container, show package contents
+
+[] TODO: use current location -- use class LocationManager from 09-Location example
 
 
 https://www.hackingwithswift.com/books/ios-swiftui/bucket-list-introduction
